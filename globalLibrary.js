@@ -128,8 +128,8 @@ return (code == codeNum);
 }
 
 
-handleKeyAction = function(keyState, codeNum, callback, event){
-
+handleKeyAction = function(keyState, codeNum, callback, event)
+{
 keyAction = (keyState.indexOf("key") == -1) ? ("key" + keyState) : keyState;
    
    if(EventManager.eventTypeIs(keyAction, event)){
@@ -137,52 +137,6 @@ keyAction = (keyState.indexOf("key") == -1) ? ("key" + keyState) : keyState;
       if(keyCodeIs(codeNum, event)){
        callback();
       }
-   }
-}
-
-
-
-
-
-
-/* 
-* keeps a draggable element from being dragged outside of
-* the parent's boundary size or browser window boundary
-* @author: Michael Orji
-* @date: 2nd october, 2010
-*/
-function maintainBoundary(elem, parentElem){
-
-   if(parentElem == null || parentElem == ''){
-    parentElem = Browser;
-    parentWidth = Browser.Size.width();
-    parentHeight = getDocHeight(); //Browser.Size.height();
-    
-   }
-
-   else{
-    parentWidth = parseInt(getStyleValue(parentElem, 'width'));
-    parentHeight = parseInt(getStyleValue(parentElem, 'height'));
-   }
-
-  var elemWidth = parseInt(getStyleValue(elem, 'width'));
-  var elemHeight = parseInt(getStyleValue(elem, 'height'));
-  var elemLeft = parseInt(elem.style.left);
-  var elemRight = parentWidth - (elemLeft + elemWidth);
-  var elemTop = parseInt(elem.style.top);
-  var elemBottom = parentHeight - (elemTop + elemHeight);
-
-   if((elemLeft + elemWidth) >= parentWidth){
-    elem.style.left = parentWidth - elemWidth + 'px';
-   }
-   if((elemRight + elemWidth) >= parentWidth){
-    elem.style.left = '0px';
-   }
-   if( (elemTop + elemHeight) >= parentHeight){
-    elem.style.top = parentHeight - elemHeight + 'px';
-   }
-   if( (elemBottom + elemHeight) >= parentHeight){
-    elem.style.top = '0px';
    }
 }
 
@@ -271,70 +225,7 @@ function setWindowStatusMsg(msg){
  return true;
 }
 
-/*
-* @author: michael orji
-*/
-function inArray(needle, haystack, strict){ 
- var len = haystack.length;
-   //for(var i = 0; i < len; i++)
-   for(var i in haystack)
-   {
-   
-      if(strict){
-         if(haystack[i] === needle){
-          return true;
-         }
-      }
-      else{
-         if(haystack[i] == needle){
-          return true;
-         }
-      }
-   }
- return false;
-}
 
-/*
-* @author: michael orji
-* @date: 25 oct, 2010 16:41:26
-*/
-function removeFromArray(idOfArrayElementToRemove, arr){
-  var arrayLength = arr.length;
-   for(var i = 0; i < arrayLength; i++){
-      if((arr[i] == idOfArrayElementToRemove) || (arr[i]['id'] == idOfArrayElementToRemove) || (arr[i].id == idOfArrayElementToRemove)){
-       arr.splice(i,1);
-       return;
-      }
-   }
-}
-
-
-//@date: 29 April, 2012
-function getRandomArrayElement(arr, elementToExclude){
-
- var numOfElems = arr.length;
- var randomizer = Math.floor(numOfElems * Math.random());
-
-   if(isEmpty(arr)){
-    return null;
-   }
-
-   if(arr[randomizer] && (arr[randomizer] != elementToExclude) ){
-    return arr[randomizer];
-   } 
-   else{
-    getRandomArrayElement(arr, elementToExclude);
-   } 
-}
-
-//returns the last element in an array, without removing that element from the array
-//@date: 29 Apr, 2012
-function getLastElementInArray(arr){
-   if(isEmpty(arr)){
-    return null;
-   }
- return arr[arr.length-1];
-}
 
 //useful for strings and arrays at the moment
 //TO DO: extend to apply to every possible object and data-type (except boolean)
@@ -343,35 +234,4 @@ function isEmpty(obj){
  return obj.length == 0;
 }
 
-/*
-   * javascript equivalent of the php array_walk funcion
-   * works for both arrays and objects, 
-   * @return type void;
-   * @date: 04, sept, 2010;
-   */
-   function arrayWalk(arr, func){
 
-      for(var x in arr){
-       func(arr[x]);
-      }
-   }
-
-/*
-* Gets the absolute path to specified file or folder
-* @author: Michael Orji
-* @date: Nov. 11, 2012
-*/
-function get_path(targetName){
- 
- var scripts     = $Tag('script');
- var targetPath  = '';
-   for(i = 0; i < scripts.length; i++){
-    var scriptPath           = scripts[i].src.replace(/%20/g, ' ');  
-    var targetPathStartIndex = scriptPath.lastIndexOf('/' + targetName) + 1; //
-    var scriptName           = scriptPath.substring(targetPathStartIndex, targetPathStartIndex + targetName.lastIndexOf(getLastChar(targetName)) + 1 );
-      if(trim(scriptName) == trim(targetName)){ 
-       targetPath = trim( scriptPath.substring(0, targetPathStartIndex) );
-       return targetPath + '/';
-      }
-   }
-}
