@@ -14,6 +14,28 @@ MO.namespace = function(name)
 }
 
 /*
+* @credits: Wrox professional javascript for web developers, pg 197
+*/
+if (typeof Node == "undefined") 
+{
+	var Node = {
+		ELEMENT_NODE                : 1,
+		ATTRIBUTE_NODE              : 2,
+		TEXT_NODE                   : 3,
+		CDATA_SECTION_NODE          : 4,
+		ENTITY_REFERENCE_NODE       : 5,
+		ENTITY_NODE                 : 6,
+		PROCESSING_INSTRUCTION_NODE : 7,
+		COMMENT_NODE                : 8,
+		DOCUMENT_NODE               : 9,
+		DOCUMENT_TYPE_NODE          : 10,
+		DOCUMENT_FRAGMENT_NODE      : 11,
+		NOTATION_NODE               : 12
+	}
+}
+
+
+/*
 * @Credits: http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml
 * @date; July 13, 2011; 14:24
 * @modified by: Michael Orji
@@ -737,6 +759,16 @@ fadeOut = function (elemId, minOpacity, speed)
 }
 
 /*
+* useful for strings and arrays at the moment
+* TO DO: extend to apply to every possible object and data-type (except boolean)
+* @date: 29 Apr, 2012
+*/
+function isEmpty(obj)
+{
+	return obj.length == 0;
+}
+
+/*
 * javascript equivalent of the php array_walk funcion
 * works for both arrays and objects, 
 * @return type void;
@@ -856,6 +888,72 @@ function getLastChild(parent, excludeNodeType)
 	return lastBorn;
 }
 
+/*
+* original code source: http://www.quirksmode.org/js/findpos.html 
+* access date: July 9, 2011, 10:42 am;
+*/
+function getElemPos(obj)
+{
+	var curleft = curtop = 0;
+	
+	if (obj.offsetParent)
+	{
+		do 
+		{
+			curleft += obj.offsetLeft;
+			curtop  += obj.offsetTop;
+		} while (obj = obj.offsetParent);
+		
+		return {'left': curleft, 'top': curtop};
+	}
+}
+
+//FROM THE JAVASCRIPT ANTHOLOGY
+function getElemPosition(theElement)
+{
+	var positionLeft = 0;
+	var positionTop = 0;
+	
+	while (theElement != null)
+	{
+		positionLeft += theElement.offsetLeft;
+		positionTop  += theElement.offsetTop;
+		theElement    = theElement.offsetParent;
+	}
+	
+	return {'left': positionLeft, 'top': positionTop};
+}
+
+//Opening Off-site Links in a New Window
+/*
+USAGE : 
+all external links should have the rel="external" attribute
+1. SITE: <a href="http://www.google.com/" rel="external">Google (offsite)</a>
+2. document.onclick = openExtLinks;
+*/
+openExtLinks = function(e)
+{
+	var target = e ? e.target : window.event.srcElement;
+
+	while (target && !/^(a|body)$/i.test(target.nodeName))
+	{
+		target = target.parentNode;
+	}
+
+	if (target && target.getAttribute('rel') && target.rel == 'external')
+	{
+		var external = window.open(target.href);
+		return external.closed;
+	}
+}
+
+function setElemSize(elem, w, h)
+{
+	elem = $O(elem);
+	$Style(elem).width  = (String(w).replace('px', '')) + 'px';
+	$Style(elem).height = (String(h).replace('px', '')) + 'px';
+}
+
 function changeLocation(url)
 {
 	location.href = url;
@@ -885,4 +983,46 @@ function createImage(obj)
 	img.title     = obj.title       || '';
  
 	return img;
-} 
+}
+
+/*
+* returns the scrollTop property of a document as rendered
+* by any particular browser
+*/
+function scrollTop()
+{
+	var scrollTop = (document.body.scrollTop) ? document.body.scrollTop : document.documentElement.scrollTop;
+	return scrollTop;
+}
+
+/*
+* returns the scrollLeft property of a document as rendered
+* by any particular browser
+*/
+function scrollLeft()
+{
+	var scrollLeft = (document.body.scrollLeft) ? document.body.scrollLeft : document.documentElement.scrollLeft;
+	return scrollLeft;
+}   
+
+/*
+* checks if the scrollbar of a scrollable element is down
+* returns true if the scrollbar is down, false otherwise
+* @author: michael orji
+* @date oct 5, 2010, 03:16
+*/
+function scrollBarIsDown(elem)
+{
+	elem = $O(elem);
+	
+	if(elem)
+	{
+		return (elem.scrollHeight - elem.scrollTop <= elem.offsetHeight);
+	}
+}
+
+function scrollToBottom(elem)
+{
+	elem = $O(elem);
+	elem.scrollTop = elem.scrollHeight - elem.offsetHeight;
+}
