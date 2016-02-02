@@ -1,3 +1,7 @@
+/*
+* Dependencies: toolTip, colorPalette
+*/
+
 function storeRangeOfCurrentSelection() {
 		
 	if (document.all) {
@@ -46,11 +50,11 @@ function RTE(opts){
     this.menuBar                      = document.createElement('div');
     this.toolBar                      = document.createElement('div');
     this.controlsContainer.className  = 'rteControlsContainer';
-    this.directory                    = get_path('rich text editor') + 'rich text editor/';
+    this.directory                    = getPath('rich text editor') + 'rich text editor/';
 
-    var libPath = get_path('JSLib.js').substring(0); 
-    $JS([libPath + 'toolTip.js', libPath + 'colorPallette.js']);
-    $CSS([this.directory + 'styles/styles']);
+    var libPath = getPath('jslib.js').substring(0); 
+    //$JS([libPath + 'toolTip.js', libPath + 'colorPallette.js']);
+    //$CSS([this.directory + 'styles/styles']);
 
    this.create = function(){
  
@@ -255,7 +259,7 @@ RTE.prototype = {
        			theWindow.viewMode = 2; //code view
       		}
       		else{
-       			$Html(theWindow, $textContent(theWindow));
+       			$Html(theWindow, $Text(theWindow));
        			theWindow.contentEditable = true;
        			theWindow.viewMode = 1; //wysiwyg view
       		}

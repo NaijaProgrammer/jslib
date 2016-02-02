@@ -228,7 +228,7 @@ function XHR(configObj)
 			else
 			{
 				readyStateCallback(++progressCounter); // see the declaration of the progressCounter variable above for how this can be used within the function definition
-				logToConsole('progress counter ' + progressCounter);
+				console.log('progress counter ' + progressCounter);
 			}
 		}
 

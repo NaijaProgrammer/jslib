@@ -9,7 +9,7 @@
 * e.g: win = new FloatingWindow(configObj);
 * win.setPosition(l, t); win.element.style.visibility = 'hidden'
 *
-* Dependencies: StyleManager, DOMManager
+* Dependencies: DOMManager
 */
 
 function FloatingWindow(){this.init.apply(this, arguments);}
@@ -251,24 +251,28 @@ constructor: FloatingWindow,
              }
 
              if(winArray.length > 0){
-               StyleManager.showElements(winArray);
-                //if(winObj.isVisible){StyleManager.showElements(winArray);}
-                //else{StyleManager.hideElements(winArray);}
+               
+                for(var i = 0; i < winArray.length; i++){
+					$Style(winArray[i]).visibility = 'visible';;
+				} 
              }
              if(WindowObject.exists(win+'_sizer')){
               var sizer = (win+'_sizer');
-                if(winObj.isMinimized || !winObj.isVisible){StyleManager.hideElement(sizer);}
-                else{StyleManager.showElement(sizer);}
+                if(winObj.isMinimized || !winObj.isVisible){$Style(sizer).visibility = 'hidden';}
+                else{$Style(sizer).visibility = 'visible';}
              }
            
              //handle cases where the window is minimized, while having focus
              if( (winObj.isMinimized) && (minWinArray.length > 0) ){
-              StyleManager.hideElements(minWinArray);
+              
+			  for(var i = 0; i < minWinArray.length; i++){
+					$Style(minWinArray[i]).visibility = 'hidden';;
+				}
              }
              if( (!winObj.isMinimized) && (!isVisible(win + '_contentBox')) ){
-              StyleManager.showElement(win + '_contentBox');
+              $Style(win + '_contentBox').visibility = 'visible';
              }
-           StyleManager.showElement(win);
+           $Style(win).visibility = 'visible';
            winObj.focused = true;
            winObj.handleFocus(winObj);
           }
@@ -297,11 +301,13 @@ constructor: FloatingWindow,
        if(WindowObject.exists(win+'_close')) winArray.push(win+'_close');
        if(WindowObject.exists(win+'_minimize')) winArray.push(win+'_minimize'); 
       }
-      if(winArray.length > 0){StyleManager.hideElements(winArray);}
+      if(winArray.length > 0){for(var i = 0; i < winArray.length; i++){
+					$Style(winArray[i]).visibility = 'hidden';;
+				}}
       if(hide && (win != exemption)){
-       StyleManager.hideElement(win);
+       $Style(win).visibility = 'hidden';
          if(isVisible(win + '_contentBox')){ 
-          StyleManager.hideElement(win + '_contentBox');
+          $Style(win + '_contentBox').visibility = 'hidden';
          }
       }
     winObj.focused = false;
@@ -322,9 +328,11 @@ constructor: FloatingWindow,
          if(WindowObject.exists(win + '_sizer')){winArray.push(win + "_sizer");}
          if(WindowObject.exists(win + '_detach')){winArray.push(win + "_detach");}
          if(WindowObject.exists(win + '_maximize')){winArray.push(win + "_maximize");}
-         if(winArray.length > 0){StyleManager.hideElements(winArray);}  
-       StyleManager.hideElement(win + '_contentBox');
-       StyleManager.setStyle(winObj.getId(), {'height' : winObj.topControlsBoxHeight});
+         if(winArray.length > 0){for(var i = 0; i < winArray.length; i++){
+					$Style(winArray[i]).visibility = 'hidden';;
+				}}  
+       $Style(win + '_contentBox').visibility = 'hidden';
+       $Style(winObj.getId()).height = winObj.topControlsBoxHeight;
        winObj.isMinimized = true;
       }
    }, //end minimize
@@ -339,8 +347,8 @@ constructor: FloatingWindow,
       }
       else{
        var restoreHeight = winObj.currHeight + 'px';
-       StyleManager.setStyle(winObj.getId(), {'height' : restoreHeight});
-       StyleManager.showElement(win + '_contentBox');
+       $Style(winObj.getId()).height = restoreHeight;
+       $Style(win + '_contentBox').visibility = 'visible';
        winObj.isMinimized = false;
       }
     winObj.handleMinimize(winObj);
@@ -425,7 +433,7 @@ constructor: FloatingWindow,
     winId = windowId || this.element;
     winObj = ( (windowId) ? WindowObject.getWindowAsObject(windowId) : this);
     
-    StyleManager.showElement(winId);
+	$Style(winId).visibility = 'visible';
     winObj.isVisible = true;
        if(!this.showCallbacks){
         this.showCallbacks = [];
@@ -441,7 +449,7 @@ constructor: FloatingWindow,
     var winObj = WindowObject.getWindowAsObject(winId);
 
     this.unfocus(winId, hide, exemption);
-    StyleManager.hideElement(winId);
+	$Style(winId).visibility = 'hidden';
     winObj.isVisible = false;
        if(!winObj.showCallbacks){
         winObj.showCallbacks = [];
