@@ -216,15 +216,38 @@ function $Center(elem)
 }
 
 $Opacity = function(elemId, opacityLevel)
-{
+{   
 	var elem = $O(elemId);
-	if(opacityLevel > .99) opacityLevel = .99;
-	if(opacityLevel < 0) opacityLevel = 0;
+	
+	if(opacityLevel > .99)
+	{
+		opacityLevel = .99;
+	}
+	
+	if(opacityLevel < 0)
+	{
+		opacityLevel = 0;
+	}
 
-   if(typeof elem.style.opacity != 'undefined') elem.style.opacity = opacityLevel;
-   else if(typeof elem.style.MozOpacity != 'undefined') elem.style.MozOpacity = opacityLevel;
-   else if(typeof elem.style.KhtmlOpacity != 'undefined') elem.style.KhtmlOpacity = opacityLevel;
-   else elem.style.filter = "alpha(opacity=" + opacityLevel * 100 + ")";
+	if(typeof elem.style.opacity != 'undefined')
+	{
+		elem.style.opacity = opacityLevel;
+	}
+	
+	else if(typeof elem.style.MozOpacity != 'undefined') 
+	{
+	   elem.style.MozOpacity = opacityLevel;
+	}
+	
+	else if(typeof elem.style.KhtmlOpacity != 'undefined')
+	{
+		elem.style.KhtmlOpacity = opacityLevel;
+	}
+	
+	else
+	{
+		elem.style.filter = "alpha(opacity=" + opacityLevel * 100 + ")";
+	}
 }
 
 /* 

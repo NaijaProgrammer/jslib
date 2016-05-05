@@ -222,13 +222,13 @@ function XHR(configObj)
 					*/
 					errorCallback(xhrObject, aborted);
 					var messageOnAbort = aborted ? "The request timed out" : ""; 
-					logToConsole("Error " + xhrObject.status + " : " + xhrObject.statusText + "\n" + messageOnAbort);    
+					//logToConsole("Error " + xhrObject.status + " : " + xhrObject.statusText + "\n" + messageOnAbort);    
 				} 
 			}
 			else
 			{
 				readyStateCallback(++progressCounter); // see the declaration of the progressCounter variable above for how this can be used within the function definition
-				console.log('progress counter ' + progressCounter);
+				//console.log('progress counter ' + progressCounter);
 			}
 		}
 
