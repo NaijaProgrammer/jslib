@@ -165,7 +165,7 @@ function XHR(configObj)
 				}*/
 					
 				aborted = true; //@credits: Accelerated Dom Scripting with Ajax, APIs and Libraries, chap. 5, section 4: planning for failure
-				xhrOjbect.abort();
+				xhrObject.abort();
 					
 			}, timeout * 1000);
 		}
