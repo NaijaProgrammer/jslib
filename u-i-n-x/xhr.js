@@ -78,6 +78,7 @@ function XHR(configObj)
 		
 		if(!this.cache)
 		{
+			this.setRequestHeader("X-Requested-With", "xmlhttprequest");
 			this.setRequestHeader("If-Modified-Since", "Wed, 15 Jan 1995 01:00:00 GMT");
 			this.setRequestHeader("Cache-Control","no-cache");
 			this.setRequestHeader("Cache-Control", "must-revalidate");
@@ -163,7 +164,7 @@ function XHR(configObj)
 					aborted = true; //@credits: Accelerated Dom Scripting with Ajax, APIs and Libraries, chap. 5, section 4: planning for failure
 					xhrOjbect.abort();
 				}*/
-					
+				
 				aborted = true; //@credits: Accelerated Dom Scripting with Ajax, APIs and Libraries, chap. 5, section 4: planning for failure
 				xhrObject.abort();
 					
@@ -222,13 +223,13 @@ function XHR(configObj)
 					*/
 					errorCallback(xhrObject, aborted);
 					var messageOnAbort = aborted ? "The request timed out" : ""; 
-					//logToConsole("Error " + xhrObject.status + " : " + xhrObject.statusText + "\n" + messageOnAbort);    
+					//("Error " + xhrObject.status + " : " + xhrObject.statusText + "\n" + messageOnAbort);    
 				} 
 			}
 			else
 			{
 				readyStateCallback(++progressCounter); // see the declaration of the progressCounter variable above for how this can be used within the function definition
-				//console.log('progress counter ' + progressCounter);
+				//logToConsole('progress counter ' + progressCounter);
 			}
 		}
 
